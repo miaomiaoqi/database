@@ -1,0 +1,194 @@
+spring:
+  redisson:
+    # single/masterslave/sentinel/cluster/
+    mode: cluster
+
+    ##### 常用设置 ######
+    # Redisson 的对象编码类是用于将对象进行序列化和反序列化，以实现对该对象在Redis里的读取和存储。Redisson提供了以下几种的对象编码应用，以供大家选择：
+    # org.redisson.codec.JsonJacksonCodec	Jackson JSON 编码 默认编码
+    # org.redisson.codec.AvroJacksonCodec	Avro 一个二进制的JSON编码
+    # org.redisson.codec.SmileJacksonCodec	Smile 另一个二进制的JSON编码
+    # org.redisson.codec.CborJacksonCodec	CBOR 又一个二进制的JSON编码
+    # org.redisson.codec.MsgPackJacksonCodec	MsgPack 再来一个二进制的JSON编码
+    # org.redisson.codec.IonJacksonCodec	Amazon Ion 亚马逊的Ion编码，格式与JSON类似
+    # org.redisson.codec.KryoCodec	Kryo 二进制对象序列化编码
+    # org.redisson.codec.SerializationCodec	JDK序列化编码
+    # org.redisson.codec.FstCodec	FST 10倍于JDK序列化性能而且100%兼容的编码
+    # org.redisson.codec.LZ4Codec	LZ4 压缩型序列化对象编码
+    # org.redisson.codec.SnappyCodec	Snappy 另一个压缩型序列化对象编码
+    # org.redisson.client.codec.JsonJacksonMapCodec	基于Jackson的映射类使用的编码。可用于避免序列化类的信息，以及用于解决使用byte[]遇到的问题。
+    # org.redisson.client.codec.StringCodec	纯字符串编码（无转换）
+    # org.redisson.client.codec.LongCodec	纯整长型数字编码（无转换）
+    # org.redisson.client.codec.ByteArrayCodec	字节数组编码
+    # org.redisson.codec.CompositeCodec	用来组合多种不同编码在一起
+    # 编码方式 默认 org.redisson.codec.JsonJacksonCodec
+    codec: org.redisson.codec.JsonJacksonCodec
+    # 这个线程池数量被所有RTopic对象监听器，RRemoteService调用者和RExecutorService任务共同共享。默认当前核数 * 2
+    threads: 0
+    # 这个线程池数量是在一个Redisson实例内，被其创建的所有分布式数据类型和服务，以及底层客户端所一同共享的线程池里保存的线程数量。默认当前核数 * 2
+    nettyThreads: 0
+    # 单独提供一个用来执行所有RTopic对象监听器，RRemoteService调用者和RExecutorService任务的线程池（ExecutorService）实例。
+    # executor:
+    # 用于特别指定一个EventLoopGroup. EventLoopGroup是用来处理所有通过Netty与Redis服务之间的连接发送和接受的消息。每一个Redisson都会在默认情况下自己创建管理一个EventLoopGroup实例。因此，如果在同一个JVM里面可能存在多个Redisson实例的情况下，采取这个配置实现多个Redisson实例共享一个EventLoopGroup的目的。
+    # 只有io.netty.channel.epoll.EpollEventLoopGroup或io.netty.channel.nio.NioEventLoopGroup才是允许的类型。
+    # eventLoopGroup:
+    # 传输模式
+    # 可选参数：
+    # TransportMode.NIO,
+    # TransportMode.EPOLL - 需要依赖里有netty-transport-native-epoll包（Linux）
+    # TransportMode.KQUEUE - 需要依赖里有 netty-transport-native-kqueue包（macOS）
+    # 默认值 TransportMode.NIO
+    transportMode: NIO
+    # 监控锁的看门狗超时时间单位为毫秒。该参数只适用于分布式锁的加锁请求中未明确使用leaseTimeout参数的情况。如果该看门口未使用lockWatchdogTimeout去重新调整一个分布式锁的lockWatchdogTimeout超时，那么这个锁将变为失效状态。这个参数可以用来避免由Redisson客户端节点宕机或其他原因造成死锁的情况。
+    # 默认 30000
+    lockWatchdogTimeout: 30000
+    # 通过该参数来修改是否按订阅发布消息的接收顺序出来消息，如果选否将对消息实行并行处理，该参数只适用于订阅发布消息的情况, 默认true
+    keepPubSubOrder: true
+    # 用来指定高性能引擎的行为。由于该变量值的选用与使用场景息息相关（NORMAL除外）我们建议对每个参数值都进行尝试。
+    # 该参数仅限于Redisson PRO版本。
+    # performanceMode: HIGHER_THROUGHPUT
+
+    ###########通用#############
+    # 用于发布和订阅连接的最小保持连接数（长连接）。Redisson内部经常通过发布和订阅来实现许多功能。长期保持一定数量的发布订阅连接是必须的。默认 1
+    subscriptionConnectionMinimumIdleSize: 1
+    # 用于发布和订阅连接的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 50
+    subscriptionConnectionPoolSize: 50
+    # 确定采用哪种方式（JDK或OPENSSL）来实现SSL连接。默认 JDK
+    sslProvider: JDK
+    # 指定SSL信任证书库的路径。默认 null
+    sslTruststore: null
+    # 指定SSL信任证书库的密码。默认 null
+    sslTruststorePassword: null
+    # 指定SSL钥匙库的路径。默认 null
+    sslKeystore: null
+    # 指定SSL钥匙库的密码。默认 null
+    sslKeystorePassword: null
+    # 开启SSL终端识别能力。 默认 true
+    sslEnableEndpointIdentification: true
+    # 在Redis节点里显示的客户端名称。默认 null
+    clientName: null
+    # 等待节点回复命令的时间。该时间从命令发送成功时开始计时。默认 3000
+    timeout: 3000
+    # 如果尝试达到 retryAttempts（命令失败重试次数） 仍然不能将命令发送至某个指定的节点时，将抛出错误。如果尝试在此限制之内发送成功，则开始启用 timeout（命令等待超时） 计时。默认 3
+    retryAttempts: 3
+    # 在一条命令发送失败以后，等待重试发送的时间间隔。时间单位是毫秒。默认 1500
+    retryInterval: 1500
+    # 用于节点身份验证的密码。默认 null
+    password: null
+    # 在某个节点执行相同或不同命令时，连续 失败 failedAttempts（执行失败最大次数） 时，该节点将被从可用节点列表里清除，直到 reconnectionTimeout（重新连接时间间隔） 超时以后再次尝试。默认 3
+    failedAttempts: 3
+    # 同任何节点建立连接时的等待超时。时间单位是毫秒。默认 10000
+    connectTimeout: 10000
+    # 当与某个节点的连接断开时，等待与其重新建立连接的时间间隔。时间单位是毫秒。默认 3000
+    reconnectionTimeout: 3000
+    # 单个连接最大订阅数量, 默认 5
+    subscriptionsPerConnection: 5
+    # 如果当前连接池里的连接数量超过了最小空闲连接数，而同时有连接空闲时间超过了该数值，那么这些连接将会自动被关闭，并从连接池里去掉。时间单位是毫秒。单位：毫秒 默认10000
+    idleConnectionTimeout: 10000
+
+
+
+    ########### 单节点配置 ###########
+    # 可以通过host:port的格式来指定节点地址。
+#    address: 127.0.0.1:6379
+#    # 最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时写入反应速度。默认 32
+#    connectionMinimumIdleSize: 32
+#    # 连接池最大容量。连接池的连接数量自动弹性伸缩。默认 64
+#    connectionPoolSize: 64
+#    # 监测DNS的变化情况的时间间隔, 单位:毫秒 默认 5000
+#    dnsMonitoringInterval: 5000
+#    # 尝试连接的数据库编号。默认 0
+#    database: 0
+
+    ###### 主从模式设置 #########
+#    # 用来指定检查节点DNS变化的时间间隔。使用的时候应该确保JVM里的DNS数据的缓存时间保持在足够低的范围才有意义。用-1来禁用该功能。默认 5000
+#    dnsMonitoringInterval: 5000
+#    # 可以通过host:port的格式来指定主节点地址。
+#    masterAddress: host:port
+#    # 可以通过host:port的格式来指定从节点的地址。多个节点可以一次性批量添加。
+#    slaveAddress: host:port,host:port
+#    # 在从服务节点里读取的数据说明已经至少有两个节点保存了该数据，确保了数据的高可用性。
+#    # 设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。 MASTER - 只在主服务节点里读取。 MASTER_SLAVE - 在主从服务节点里都可以读取。默认 SLAVE
+#    readMode: SLAVE
+#    # 设置订阅操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里订阅。 MASTER - 只在主服务节点里订阅。默认 SLAVE
+#    subscriptionMode: SLAVE
+#    # 在使用多个Redis服务节点的环境里，可以选用以下几种负载均衡方式选择一个节点：
+#    # org.redisson.connection.balancer.WeightedRoundRobinBalancer - 权重轮询调度算法
+#    # org.redisson.connection.balancer.RoundRobinLoadBalancer - 轮询调度算法
+#    # org.redisson.connection.balancer.RandomLoadBalancer - 随机调度算法
+#    # 默认 org.redisson.connection.balancer.RoundRobinLoadBalancer
+#    loadBalancer: org.redisson.connection.balancer.RoundRobinLoadBalancer
+#    # 多从节点的环境里，每个 从服务节点里用于普通操作（非 发布和订阅）的最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时读取反映速度。默认 32
+#    slaveConnectionMinimumIdleSize: 32
+#    # 多从节点的环境里，每个 从服务节点里用于普通操作（非 发布和订阅）连接的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 64
+#    slaveConnectionPoolSize: 64
+#    # 多从节点的环境里，每个 主节点的最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时写入反应速度。默认 32
+#    masterConnectionMinimumIdleSize: 32
+#    # 主节点的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 64
+#    masterConnectionPoolSize: 64
+#    # 尝试连接的数据库编号。默认 0
+#    database: 0
+
+    ####### 哨兵模式 ########
+#    # 用来指定检查节点DNS变化的时间间隔。使用的时候应该确保JVM里的DNS数据的缓存时间保持在足够低的范围才有意义。用-1来禁用该功能。默认 5000
+#    dnsMonitoringInterval: 5000
+#    # 主服务器的名称是哨兵进程中用来监测主从服务切换情况的。
+#    masterName: mastername
+#    # 可以通过host:port的格式来指定哨兵节点的地址。多个节点可以一次性批量添加。
+#    sentinelAddresses: host:port
+#    # 在从服务节点里读取的数据说明已经至少有两个节点保存了该数据，确保了数据的高可用性。
+#    # 设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。 MASTER - 只在主服务节点里读取。 MASTER_SLAVE - 在主从服务节点里都可以读取。
+#    # 默认 SLAVE
+#    readMode: SLAVE
+#    # 设置订阅操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里订阅。 MASTER - 只在主服务节点里订阅。默认 SLAVE
+#    subscriptionMode: SLAVE
+#    # 在使用多个Redis服务节点的环境里，可以选用以下几种负载均衡方式选择一个节点：
+#    # org.redisson.connection.balancer.WeightedRoundRobinBalancer - 权重轮询调度算法
+#    # org.redisson.connection.balancer.RoundRobinLoadBalancer - 轮询调度算法
+#    # org.redisson.connection.balancer.RandomLoadBalancer - 随机调度算法
+#    # 默认 org.redisson.connection.balancer.RoundRobinLoadBalancer
+#    loadBalancer: org.redisson.connection.balancer.RoundRobinLoadBalancer
+#    # 多从节点的环境里，每个 从服务节点里用于发布和订阅连接的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 50
+#    slaveConnectionMinimumIdleSize: 32
+#    # 多从节点的环境里，每个 从服务节点里用于普通操作（非 发布和订阅）连接的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 64
+#    slaveConnectionPoolSize: 64
+#    # 多从节点的环境里，每个 主节点的最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时写入反应速度。默认 32
+#    masterConnectionMinimumIdleSize: 32
+#    # 主节点的连接池最大容量。连接池的连接数量自动弹性伸缩。默认 64
+#    masterConnectionPoolSize: 64
+#    # 尝试连接的数据库编号。默认 0
+#    database: 0
+
+
+    ##########集群设置###########
+    # 集群地址
+    nodeAddresses:
+      - "redis://127.0.0.1:8001"
+      - "redis://127.0.0.1:8002"
+      - "redis://127.0.0.1:8003"
+      - "redis://127.0.0.1:8004"
+      - "redis://127.0.0.1:8005"
+      - "redis://127.0.0.1:8006"
+    # 对Redis集群节点状态扫描的时间间隔。单位是毫秒。默认1000
+    scanInterval: 1000
+    # 在从服务节点里读取的数据说明已经至少有两个节点保存了该数据，确保了数据的高可用性。
+    # 设置读取操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里读取。 MASTER - 只在主服务节点里读取。 MASTER_SLAVE - 在主从服务节点里都可以读取。
+    # 默认 SLAVE
+    readMode: SLAVE
+    # 设置订阅操作选择节点的模式。 可用值为： SLAVE - 只在从服务节点里订阅。 MASTER - 只在主服务节点里订阅。默认 SLAVE
+    subscriptionMode: SLAVE
+    # 在多Redis服务节点的环境里，可以选用以下几种负载均衡方式选择一个节点：
+    # org.redisson.connection.balancer.WeightedRoundRobinBalancer - 权重轮询调度算法
+    # org.redisson.connection.balancer.RoundRobinLoadBalancer - 轮询调度算法
+    # org.redisson.connection.balancer.RandomLoadBalancer - 随机调度算法
+    # 默认 org.redisson.connection.balancer.RoundRobinLoadBalancer
+    loadBalancer: org.redisson.connection.balancer.RoundRobinLoadBalancer
+    # 多从节点的环境里，每个 从服务节点里用于普通操作（非 发布和订阅）的最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时读取反映速度。 默认值 32
+    slaveConnectionMinimumIdleSize: 32
+    # 多从节点的环境里，每个 从服务节点里用于普通操作（非 发布和订阅）连接的连接池最大容量。连接池的连接数量自动弹性伸缩。 默认 64
+    slaveConnectionPoolSize: 64
+    # 多节点的环境里，每个 主节点的最小保持连接数（长连接）。长期保持一定数量的连接有利于提高瞬时写入反应速度。 默认 32
+    masterConnectionMinimumIdleSize: 32
+    # 多主节点的环境里，每个 主节点的连接池最大容量。连接池的连接数量自动弹性伸缩。 默认 64
+    masterConnectionPoolSize: 64
+
