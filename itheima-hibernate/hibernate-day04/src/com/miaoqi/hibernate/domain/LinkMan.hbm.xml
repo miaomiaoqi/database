@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.miaoqi.hibernate.domain.LinkMan" table="cst_linkman">
+        <id name="lkm_id" column="lkm_id">
+            <!-- 主键生成策略 -->
+            <generator class="native"></generator>
+        </id>
+        <property name="lkm_name" column="lkm_name"></property>
+        <property name="lkm_gender" column="lkm_gender"></property>
+        <property name="lkm_phone" column="lkm_phone"></property>
+        <property name="lkm_mobile" column="lkm_mobile"></property>
+        <property name="lkm_email" column="lkm_email"></property>
+        <property name="lkm_qq" column="lkm_qq"></property>
+        <property name="lkm_position" column="lkm_position"></property>
+        <property name="lkm_memo" column="lkm_memo"></property>
+
+        <!-- 配置多对一的关系 -->
+        <!-- 
+            many-to-one标签:
+                name: 一的一方的对象的属性名称
+                class: 一的一方的类的全路径
+                column: 多的一方的表的外键列名称
+         -->
+        <many-to-one name="customer" fetch="join" lazy="false" class="com.miaoqi.hibernate.domain.Customer"
+                     column="lkm_cust_id" cascade="save-update"/>
+    </class>
+</hibernate-mapping>
