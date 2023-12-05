@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoqi.shop.mapper.TabpleEmpMapper">
+    <resultMap id="BaseResultMap" type="com.miaoqi.shop.model.TabpleEmp">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="emp_id" property="empId" jdbcType="INTEGER"/>
+        <result column="emp_name" property="empName" jdbcType="VARCHAR"/>
+        <result column="emp_salary" property="empSalary" jdbcType="DOUBLE"/>
+        <result column="emp_age" property="empAge" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>

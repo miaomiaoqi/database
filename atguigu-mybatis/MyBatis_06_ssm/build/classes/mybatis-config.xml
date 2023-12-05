@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 开启驼峰命名规则 -->
+        <!-- <setting name="mapUnderscoreToCamelCase" value="true"/> -->
+        <!-- 对null值的处理 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <!-- 开启懒加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 开启按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+
+    <!-- 5. databaseIdProvider: 支持多数据库厂商 
+            type="DB_VENDOR"
+                作用就是得到数据库厂商的标识(驱动规范), mybatis就能根据数据库厂商的标识来执行不同的sql
+                MySQL, Oracle, SQL Server, ...
+    -->
+    <databaseIdProvider type="DB_VENDOR">
+        <!-- 为不用的数据库厂商起别名 -->
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle"/>
+        <property name="SQL Server" value="sqlserver"/>
+    </databaseIdProvider>
+
+</configuration>

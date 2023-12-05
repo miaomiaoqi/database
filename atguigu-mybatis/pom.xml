@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.miaoqi.atguigu</groupId>
+    <artifactId>atguigu-mybatis</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>CommonMapper01Mapper</module>
+        <module>CommonMapper02MBG</module>
+        <module>CommonMapper03Mine</module>
+        <module>CommonMapper04Extends</module>
+        <module>CommonMapper05TypeHandler</module>
+        <module>CommonMapper06Principle</module>
+        <module>mybatis-proxy</module>
+    </modules>
+
+
+</project>
