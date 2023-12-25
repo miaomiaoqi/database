@@ -6,4 +6,32 @@
         INSERT INTO t_user
         VALUES (NULL, '张三', '123', 23, '女', '12345@qq.com')
     </insert>
+
+    <update id="updateUser">
+        UPDATE t_user
+        SET username = '李四'
+        WHERE id = 4
+    </update>
+
+    <delete id="deleteUser">
+        DELETE
+        FROM t_user
+        WHERE id = 4
+    </delete>
+
+    <!--
+        查询功能的标签必须设置 resultType 或 resultMap
+        resultType: 设置默认的映射关系
+        resultMap: 设置自定义的映射关系
+    -->
+    <select id="getUserById" resultType="com.atguigu.mybatis.pojo.User">
+        SELECT *
+        FROM t_user
+        WHERE id = 3
+    </select>
+
+    <select id="getAllUser" resultType="com.atguigu.mybatis.pojo.User">
+        SELECT *
+        FROM t_user
+    </select>
 </mapper>
