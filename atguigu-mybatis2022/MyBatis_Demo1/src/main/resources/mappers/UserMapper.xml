@@ -30,7 +30,7 @@
         WHERE id = 3
     </select>
 
-    <select id="getAllUser" resultType="com.atguigu.mybatis.pojo.User">
+    <select id="getAllUser" resultType="User">
         SELECT *
         FROM t_user
     </select>
