@@ -17,6 +17,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>redis7_study</module>
+        <module>redis_distributed_lock2</module>
     </modules>
 
     <properties>

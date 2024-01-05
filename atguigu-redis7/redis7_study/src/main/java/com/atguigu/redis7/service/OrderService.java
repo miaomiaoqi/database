@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,6 +16,29 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 @Slf4j
 public class OrderService {
+
+    public static void main(String[] args) {
+        File file = new File("/Volumes/wm/aa");
+        // shanchu(file);
+    }
+
+    // public static void shanchu(File file) {
+    //     File[] files = file.listFiles();
+    //     for (int i = 0; i < files.length; i++) {
+    //         if (files[i].isFile()) {
+    //             String fileName = files[i].getName();
+    //             if (fileName.endsWith("mht") || fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith("chm") || fileName.endsWith("apk")
+    //                     || fileName.endsWith("gif") || fileName.endsWith("zip")) {
+    //                 // files[i].delete();
+    //             }
+    //         } else {
+    //             shanchu(files[i]);
+    //         }
+    //     }
+    //     if (files == null || files.length == 0) {
+    //         // file.delete();
+    //     }
+    // }
 
     public static final String ORDER_KEY = "ord:";
 
