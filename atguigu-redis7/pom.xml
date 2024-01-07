@@ -18,6 +18,7 @@
     <modules>
         <module>redis7_study</module>
         <module>redis_distributed_lock2</module>
+        <module>redis_redlock</module>
     </modules>
 
     <properties>
